@@ -1,26 +1,47 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
-using System.IO;
+using Zenject;
 
-public class MenuManager : MonoBehaviour
+public class MenuManager : IMenuManager
 {
-    public int NumTowers = 3;
-    public TextMeshProUGUI RecordsText; // Поле для вывода рекордов
+    private readonly TextMeshProUGUI _recordsText;
+    private readonly GameObject _menuPanel;
+    private readonly Button _startButton;
+    private readonly Button _exitButton;
+    private readonly Button _recordsButton;
+    private readonly IUIManager _uiManager;
 
-    void Start()
+    private int _defaultNumTowers;
+
+    public MenuManager(
+        int defaultNumTowers,
+        TextMeshProUGUI recordsText,
+        GameObject menuPanel,
+        Button startButton,
+        Button exitButton,
+        Button recordsButton,
+        IUIManager uiManager)
     {
-        if (RecordsText != null)
-        {
-            DisplayRecords();
-        }
+        _defaultNumTowers = defaultNumTowers;
+        _recordsText = recordsText;
+        _menuPanel = menuPanel;
+        _startButton = startButton;
+        _exitButton = exitButton;
+        _recordsButton = recordsButton;
+        _uiManager = uiManager;
+
+        _startButton.onClick.AddListener(() => StartGameWithTowers(_defaultNumTowers));
+        _exitButton.onClick.AddListener(ExitGame);
+        _recordsButton.onClick.AddListener(DisplayRecords);
+
+        _menuPanel.SetActive(true);
     }
 
-    public void StartGameWithTowers()
+    public void StartGameWithTowers(int numTowers)
     {
-        PlayerPrefs.SetInt("SelectedTowers", NumTowers);
-        PlayerPrefs.Save();
-        SceneManager.LoadScene("MainScene");
+        PlayerPrefs.SetInt("SelectedTowers", numTowers);
+        _uiManager.HideMenu();
     }
 
     public void ExitGame()
@@ -28,40 +49,8 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
-
     public void DisplayRecords()
     {
-        string recordsString = "";
-        for (int i = 3; i <= 8; i++)
-        {
-            string fileName = $"GameRecords_{i}.json";
-            string path = Path.Combine(Application.persistentDataPath, fileName);
-            if (File.Exists(path))
-            {
-                string json = File.ReadAllText(path);
-                GameRecord record = JsonUtility.FromJson<GameRecord>(json);
-                if (record != null && record.NumOfTowers == i)
-                {
-                    string formattedTime = FormatTime(record.BestTime);
-                    recordsString += $"Башни: {i}, Ходы: {record.BestMoves}, Время: {formattedTime}\n";
-                }
-                else
-                {
-                    recordsString += $"Башни: {i}, Рекорд не найден\n";
-                }
-            }
-            else
-            {
-                recordsString += $"Башни: {i}, Ходы: -, Время: -\n";
-            }
-        }
-        RecordsText.text = recordsString;
-    }
-
-    private string FormatTime(float timeInSeconds)
-    {
-        int minutes = Mathf.FloorToInt(timeInSeconds / 60);
-        int seconds = Mathf.FloorToInt(timeInSeconds % 60);
-        return $"{minutes:D2}:{seconds:D2}";
+        _uiManager.LoadRecords();
     }
 }

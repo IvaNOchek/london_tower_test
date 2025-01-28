@@ -1,160 +1,175 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.IO;
-using UnityEngine.SceneManagement;
+using Zenject;
+using DG.Tweening;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour, IUIManager
 {
-    public static UIManager Instance { get; private set; }
+    // Инъекции через Zenject
+    private Button _restartButton;
+    private Button _exitButton;
+    private Button _clearRecordsButton;
+    private TextMeshProUGUI _remainingMovesText;
+    private TextMeshProUGUI _timerText;
+    private TextMeshProUGUI _bestMovesRecordText;
+    private TextMeshProUGUI _bestTimeRecordText;
+    private TextMeshProUGUI _winMessageText;
+    private TextMeshProUGUI _loseMessageText;
+    private IGameManager _gameManager;
+    private ISaveManager _saveManager;
 
-    [Header("UI Elements")]
-    public Button RestartButton;
-    public Button ExitButton;
-    public Button ClearRecordsButton;
-    public TextMeshProUGUI RemainingMovesText;
-    public TextMeshProUGUI TimerText;
-    public TextMeshProUGUI BestMovesRecordText;
-    public TextMeshProUGUI BestTimeRecordText;
-
-    [Header("Win Message")]
-    public TextMeshProUGUI WinMessageText;
-
-    [Header("Lose Message")]
-    public TextMeshProUGUI LoseMessageText;
-
+    // Внутренние переменные
     private float _elapsedTime = 0f;
     private bool _isGameActive = true;
+    private bool _gameStarted = false;
 
-    private GameRecord _gameRecord;
+    // Ссылки на объекты меню
+    public GameObject MenuPanel;
+    public Button StartButton;
+    public Button ExitMenuButton;
+    public Button RecordsButton;
+    public TextMeshProUGUI RecordsText;
 
-    void Awake()
+    [Inject]
+    public void Construct(
+        Button restartButton,
+        Button exitButton,
+        Button clearRecordsButton,
+        TextMeshProUGUI remainingMovesText,
+        TextMeshProUGUI timerText,
+        TextMeshProUGUI bestMovesRecordText,
+        TextMeshProUGUI bestTimeRecordText,
+        TextMeshProUGUI winMessageText,
+        TextMeshProUGUI loseMessageText,
+        IGameManager gameManager,
+        ISaveManager saveManager)
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        _restartButton = restartButton;
+        _exitButton = exitButton;
+        _clearRecordsButton = clearRecordsButton;
+        _remainingMovesText = remainingMovesText;
+        _timerText = timerText;
+        _bestMovesRecordText = bestMovesRecordText;
+        _bestTimeRecordText = bestTimeRecordText;
+        _winMessageText = winMessageText;
+        _loseMessageText = loseMessageText;
+        _gameManager = gameManager;
+        _saveManager = saveManager;
+
+        Initialize();
     }
 
-    void Start()
+    private void Initialize()
     {
-        RestartButton.onClick.AddListener(RestartGame);
-        ExitButton.onClick.AddListener(ExitGame);
-        ClearRecordsButton.onClick.AddListener(ClearRecords);
+        // Подписываемся на события GameManager
+        _gameManager.OnMovesUpdated += UpdateRemainingMoves;
+        _gameManager.OnGameWon += ShowWinMessage;
+        _gameManager.OnGameLost += ShowLoseMessage;
 
-        if (TimerText == null)
-        {
-            Debug.LogError("TimerText is not assigned in the Inspector!");
-        }
+        // Подписываемся на кнопки
+        _restartButton.onClick.AddListener(RestartGame);
+        _exitButton.onClick.AddListener(ExitGame);
+        _clearRecordsButton.onClick.AddListener(ClearRecords);
 
+        // Инициализация UI
         LoadRecords();
         UpdateRecordsUI();
 
-        WinMessageText.gameObject.SetActive(false);
-        LoseMessageText.gameObject.SetActive(false);
+        // Скрываем сообщения о победе и проигрыше
+        HideMessage(_winMessageText);
+        HideMessage(_loseMessageText);
+
+        ShowMenu(); // Показываем меню при запуске
     }
 
-    void Update()
+    public void ShowMenu()
     {
-        if (_isGameActive)
+        MenuPanel.SetActive(true);
+        _gameStarted = false;
+    }
+
+    public void HideMenu()
+    {
+        MenuPanel.SetActive(false);
+        _gameStarted = true;
+        _gameManager.StartNewGame(); // Начинаем новую игру при скрытии меню
+    }
+
+    public void Update(float deltaTime)
+    {
+        if (_isGameActive && _gameStarted)
         {
-            _elapsedTime += Time.deltaTime;
-            TimerText.text = $"Time: {FormatTime(_elapsedTime)}";
+            _elapsedTime += deltaTime;
+            UpdateTimer(_elapsedTime);
         }
+    }
+
+    public void UpdateTimer(float time)
+    {
+        _timerText.text = $"Time: {FormatTime(time)}";
     }
 
     public void UpdateRemainingMoves(int remainingMoves)
     {
-        RemainingMovesText.text = $"Moves Left: {remainingMoves}";
-    }
-
-    public void RestartGame()
-    {
-        LoseMessageText.gameObject.SetActive(false);
-        WinMessageText.gameObject.SetActive(false);
-        _elapsedTime = 0f;
-        _isGameActive = true;
-        GameManager.Instance.StartNewGame();
-    }
-
-    public void SaveGame()
-    {
-        if (GameManager.Instance != null)
-        {
-            int moves = GameManager.Instance.Moves;
-            float time = _elapsedTime;
-
-            LoadRecords();
-
-            if (_gameRecord.BestMoves == 0 || moves < _gameRecord.BestMoves)
-            {
-                _gameRecord.BestMoves = moves;
-            }
-
-            if (_gameRecord.BestTime == 0f || time < _gameRecord.BestTime)
-            {
-                _gameRecord.BestTime = time;
-            }
-
-            SaveRecords();
-            UpdateRecordsUI();
-        }
-    }
-
-    public void ClearRecords()
-    {
-        _gameRecord = new GameRecord { NumOfTowers = GameManager.Instance.NumTowers };
-        SaveRecords();
-        UpdateRecordsUI();
-    }
-
-    public void ExitGame()
-    {
-        if (GameManager.Instance != null)
-        {
-            Destroy(GameManager.Instance.gameObject);
-        }
-
-        if (UIManager.Instance != null)
-        {
-            Destroy(UIManager.Instance.gameObject);
-        }
-
-        SceneManager.LoadScene("Menu");
-    }
-
-    public void StopTimer()
-    {
-        _isGameActive = false;
+        _remainingMovesText.text = $"Moves Left: {remainingMoves}";
     }
 
     public void ShowWinMessage()
     {
-        WinMessageText.text = "You Win!";
-        WinMessageText.gameObject.SetActive(true);
+        ShowMessage(_winMessageText, "Поздравляем! Вы победили!");
+        _isGameActive = false;
+        _saveManager.SaveGameResult(_gameManager.Moves, _elapsedTime, true);
+        UpdateRecordsUI();
     }
 
     public void ShowLoseMessage()
     {
-        LoseMessageText.text = "You Lose.";
-        LoseMessageText.gameObject.SetActive(true);
+        ShowMessage(_loseMessageText, "Игра окончена! Ходы исчерпаны.");
+        _isGameActive = false;
+    }
+
+    public void RestartGame()
+    {
+        _isGameActive = true;
+        _elapsedTime = 0f;
+        UpdateTimer(0f);
+        HideMessage(_winMessageText);
+        HideMessage(_loseMessageText);
+        _gameManager.StartNewGame();
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    public void LoadRecords()
+    {
+        var record = _saveManager.LoadBestRecord();
+        if (record != null)
+        {
+            _bestMovesRecordText.text = $"Best Moves: {record.BestMoves}";
+            _bestTimeRecordText.text = $"Best Time: {FormatTime(record.BestTime)}";
+            RecordsText.text = $"Best Moves: {record.BestMoves}\nBest Time: {FormatTime(record.BestTime)}";
+        }
+        else
+        {
+            _bestMovesRecordText.text = "Best Moves: -";
+            _bestTimeRecordText.text = "Best Time: -";
+            RecordsText.text = "No Records Yet";
+        }
     }
 
     public void UpdateRecordsUI()
     {
-        if (BestMovesRecordText != null)
-        {
-            BestMovesRecordText.text = _gameRecord.BestMoves > 0 ? $"Best Moves: {_gameRecord.BestMoves}" : "Best Moves: -";
-        }
-        if (BestTimeRecordText != null)
-        {
-            BestTimeRecordText.text = _gameRecord.BestTime > 0f ? $"Best Time: {FormatTime(_gameRecord.BestTime)}" : "Best Time: -";
-        }
+        LoadRecords();
+    }
+
+    public void ClearRecords()
+    {
+        _saveManager.ClearRecords();
+        UpdateRecordsUI();
     }
 
     private string FormatTime(float timeInSeconds)
@@ -164,37 +179,16 @@ public class UIManager : MonoBehaviour
         return $"{minutes:D2}:{seconds:D2}";
     }
 
-    private void SaveRecords()
+    private void ShowMessage(TextMeshProUGUI messageText, string message)
     {
-        // Устанавливаем количество башен перед сохранением
-        _gameRecord.NumOfTowers = GameManager.Instance.NumTowers;
-
-        string fileName = $"GameRecords_{_gameRecord.NumOfTowers}.json";
-        string json = JsonUtility.ToJson(_gameRecord);
-        File.WriteAllText(Path.Combine(Application.persistentDataPath, fileName), json);
+        messageText.text = message;
+        messageText.gameObject.SetActive(true);
+        messageText.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutBack);
     }
 
-    public void LoadRecords()
+    private void HideMessage(TextMeshProUGUI messageText)
     {
-        string fileName = $"GameRecords_{GameManager.Instance.NumTowers}.json";
-        string path = Path.Combine(Application.persistentDataPath, fileName);
-        if (File.Exists(path))
-        {
-            string json = File.ReadAllText(path);
-            _gameRecord = JsonUtility.FromJson<GameRecord>(json);
-        }
-        else
-        {
-            // Инициализируем новый рекорд с текущим количеством башен
-            _gameRecord = new GameRecord { NumOfTowers = GameManager.Instance.NumTowers };
-        }
+        messageText.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack)
+            .OnComplete(() => messageText.gameObject.SetActive(false));
     }
-}
-
-[System.Serializable]
-public class GameRecord
-{
-    public int NumOfTowers;
-    public int BestMoves;
-    public float BestTime;
 }

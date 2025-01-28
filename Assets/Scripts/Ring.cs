@@ -1,69 +1,63 @@
-using System.Linq;
 using UnityEngine;
+using DG.Tweening;
+using System.Linq;
 
 public class Ring : MonoBehaviour
 {
-    public Color RingColor { get; private set; } // Добавлено свойство для цвета
-    public Tower CurrentTower { get; private set; }
-    public bool IsSelected { get; private set; }
+    public Color RingColor { get; private set; }
     public bool IsTransparent { get; set; } = false;
 
     private Renderer _renderer;
-    public Color _originalColor;
-    [SerializeField] private float _blinkDuration = 1f;
-    private float _blinkTimer;
-    private bool _isBlinking = false;
+    private Sequence _blinkSequence;
+
+    public Tower CurrentTower { get; private set; }
 
     public void Initialize(Color color)
     {
-        RingColor = color; // Устанавливаем цвет кольца
+        RingColor = color;
         _renderer = GetComponent<Renderer>();
-        if (_renderer == null)
+        _renderer.material.color = RingColor;
+    }
+
+    public void Select()
+    {
+        // Визуальное выделение кольца
+        transform.DOScale(Vector3.one * 1.2f, 0.2f).SetEase(Ease.OutBack);
+    }
+
+    public void Deselect()
+    {
+        // Снятие выделения
+        transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+    }
+
+    public void StartBlinking()
+    {
+        if (IsTransparent)
         {
-            Debug.LogError("Ring Prefab must have a Renderer component!");
+            if (_renderer == null) _renderer = GetComponent<Renderer>();
+
+            _blinkSequence = DOTween.Sequence()
+                .Append(_renderer.material.DOFade(0.5f, 0.5f))
+                .Append(_renderer.material.DOFade(1f, 0.5f))
+                .SetLoops(-1, LoopType.Yoyo);
         }
-        _originalColor = color;
-        _renderer.material.color = color;
+    }
+
+    public void StopBlinking()
+    {
+        if (_blinkSequence != null && _blinkSequence.IsActive())
+        {
+            _blinkSequence.Kill();
+            if (_renderer != null)
+            {
+                _renderer.material.DOFade(1f, 0.2f);
+            }
+        }
     }
 
     public void SetTower(Tower tower)
     {
         CurrentTower = tower;
-        transform.localRotation = Quaternion.Euler(90, 0, 0);
-    }
-
-    public void Select()
-    {
-        IsSelected = true;
-        StartBlinking();
-    }
-
-    public void Deselect()
-    {
-        IsSelected = false;
-        StopBlinking();
-        _renderer.material.color = _originalColor;
-    }
-
-    public void StartBlinking()
-    {
-        _isBlinking = true;
-        _blinkTimer = 0f;
-    }
-
-    public void StopBlinking()
-    {
-        _isBlinking = false;
-        _renderer.material.color = _originalColor;
-    }
-
-    void Update()
-    {
-        if (_isBlinking)
-        {
-            _blinkTimer += Time.deltaTime;
-            float lerp = (Mathf.Sin(_blinkTimer * Mathf.PI / _blinkDuration) + 1f) / 4f; // Уменьшен коэффициент для более плавного мерцания
-            _renderer.material.color = Color.Lerp(_originalColor, Color.white, lerp);
-        }
     }
 }
