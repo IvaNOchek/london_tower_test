@@ -2,57 +2,37 @@ using UnityEngine;
 
 public class SaveManager : ISaveManager
 {
+    private const string BestMovesKey = "BestMoves";
+    private const string BestTimeKey = "BestTime";
+
     public void SaveGameResult(int moves, float time, bool isWin)
     {
-        if (isWin)
-        {
-            if (PlayerPrefs.HasKey("MinMoves"))
-            {
-                int savedMinMoves = PlayerPrefs.GetInt("MinMoves");
-                if (moves < savedMinMoves)
-                {
-                    PlayerPrefs.SetInt("MinMoves", moves);
-                }
-            }
-            else
-            {
-                PlayerPrefs.SetInt("MinMoves", moves);
-            }
+        if (!isWin) return;
 
-            if (PlayerPrefs.HasKey("BestTime"))
-            {
-                float savedBestTime = PlayerPrefs.GetFloat("BestTime");
-                if (time < savedBestTime)
-                {
-                    PlayerPrefs.SetFloat("BestTime", time);
-                }
-            }
-            else
-            {
-                PlayerPrefs.SetFloat("BestTime", time);
-            }
+        int currentBestMoves = PlayerPrefs.GetInt(BestMovesKey, int.MaxValue);
+        if (moves < currentBestMoves)
+            PlayerPrefs.SetInt(BestMovesKey, moves);
 
-            PlayerPrefs.Save();
-        }
+        float currentBestTime = PlayerPrefs.GetFloat(BestTimeKey, float.MaxValue);
+        if (time < currentBestTime)
+            PlayerPrefs.SetFloat(BestTimeKey, time);
+
+        PlayerPrefs.Save();
     }
 
     public GameRecord LoadBestRecord()
     {
-        if (PlayerPrefs.HasKey("MinMoves") && PlayerPrefs.HasKey("BestTime"))
+        return new GameRecord
         {
-            return new GameRecord
-            {
-                BestMoves = PlayerPrefs.GetInt("MinMoves"),
-                BestTime = PlayerPrefs.GetFloat("BestTime")
-            };
-        }
-        return null;
+            BestMoves = PlayerPrefs.GetInt(BestMovesKey, 0),
+            BestTime = PlayerPrefs.GetFloat(BestTimeKey, 0f)
+        };
     }
 
     public void ClearRecords()
     {
-        PlayerPrefs.DeleteKey("MinMoves");
-        PlayerPrefs.DeleteKey("BestTime");
+        PlayerPrefs.DeleteKey(BestMovesKey);
+        PlayerPrefs.DeleteKey(BestTimeKey);
         PlayerPrefs.Save();
     }
 }

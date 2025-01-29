@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 using Zenject;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class GameManager : IGameManager
 {
@@ -112,7 +113,7 @@ public class GameManager : IGameManager
         // Удаляем башни и их плейсхолдеры
         foreach (var tower in _towers)
         {
-            tower.DestroyPlaceholders(_placeholderPool);
+            tower.DestroyPlaceholders();
             Object.Destroy(tower.gameObject);
         }
         _towers.Clear();
@@ -162,7 +163,7 @@ public class GameManager : IGameManager
                 towerObj.transform.position = position;
             }
 
-            tower.Initialize(capacity, _placeholderPool);
+            tower.Initialize(capacity);
             _towers.Add(tower);
         }
     }
@@ -396,5 +397,16 @@ public class GameManager : IGameManager
             PlayerPrefs.SetInt("MinMoves", moves);
         }
         PlayerPrefs.Save();
+    }
+
+    private void HandleWinAnimation()
+    {
+        foreach (var ring in _rings)
+        {
+            ring.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f, 3);
+        }
+
+        _towers.ForEach(tower =>
+            tower.transform.DOShakePosition(1f, 0.1f));
     }
 }

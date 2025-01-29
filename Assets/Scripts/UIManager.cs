@@ -6,54 +6,28 @@ using DG.Tweening;
 
 public class UIManager : MonoBehaviour, IUIManager
 {
-    // Инъекции через Zenject
-    private Button _restartButton;
-    private Button _exitButton;
-    private Button _clearRecordsButton;
-    private TextMeshProUGUI _remainingMovesText;
-    private TextMeshProUGUI _timerText;
-    private TextMeshProUGUI _bestMovesRecordText;
-    private TextMeshProUGUI _bestTimeRecordText;
-    private TextMeshProUGUI _winMessageText;
-    private TextMeshProUGUI _loseMessageText;
+
+    [SerializeField] private TextMeshProUGUI RecordsText;
+    [SerializeField] private CanvasScaler _canvasScaler;
+    [SerializeField] private Button _restartButton;
+    [SerializeField] private Button _exitButton;
+    [SerializeField] private Button _clearRecordsButton;
+    [SerializeField] private TextMeshProUGUI _remainingMovesText;
+    [SerializeField] private TextMeshProUGUI _timerText;
+    [SerializeField] private TextMeshProUGUI _bestMovesRecordText;
+    [SerializeField] private TextMeshProUGUI _bestTimeRecordText;
+    [SerializeField] private TextMeshProUGUI _winMessageText;
+    [SerializeField] private TextMeshProUGUI _loseMessageText;
+    [SerializeField] private GameObject _menuPanel;
+
     private IGameManager _gameManager;
     private ISaveManager _saveManager;
-
-    // Внутренние переменные
-    private float _elapsedTime = 0f;
-    private bool _isGameActive = true;
-    private bool _gameStarted = false;
-
-    // Ссылки на объекты меню
-    public GameObject MenuPanel;
-    public Button StartButton;
-    public Button ExitMenuButton;
-    public Button RecordsButton;
-    public TextMeshProUGUI RecordsText;
+    private float _elapsedTime;
+    private bool _isGameActive;
 
     [Inject]
-    public void Construct(
-        Button restartButton,
-        Button exitButton,
-        Button clearRecordsButton,
-        TextMeshProUGUI remainingMovesText,
-        TextMeshProUGUI timerText,
-        TextMeshProUGUI bestMovesRecordText,
-        TextMeshProUGUI bestTimeRecordText,
-        TextMeshProUGUI winMessageText,
-        TextMeshProUGUI loseMessageText,
-        IGameManager gameManager,
-        ISaveManager saveManager)
+    public void Construct(IGameManager gameManager, ISaveManager saveManager)
     {
-        _restartButton = restartButton;
-        _exitButton = exitButton;
-        _clearRecordsButton = clearRecordsButton;
-        _remainingMovesText = remainingMovesText;
-        _timerText = timerText;
-        _bestMovesRecordText = bestMovesRecordText;
-        _bestTimeRecordText = bestTimeRecordText;
-        _winMessageText = winMessageText;
-        _loseMessageText = loseMessageText;
         _gameManager = gameManager;
         _saveManager = saveManager;
 
@@ -62,48 +36,39 @@ public class UIManager : MonoBehaviour, IUIManager
 
     private void Initialize()
     {
-        // Подписываемся на события GameManager
+        // Настройка адаптивного UI
+        ConfigureCanvasScaler();
+
+        // Подписка на события
         _gameManager.OnMovesUpdated += UpdateRemainingMoves;
         _gameManager.OnGameWon += ShowWinMessage;
         _gameManager.OnGameLost += ShowLoseMessage;
 
-        // Подписываемся на кнопки
+        // Настройка кнопок
         _restartButton.onClick.AddListener(RestartGame);
         _exitButton.onClick.AddListener(ExitGame);
         _clearRecordsButton.onClick.AddListener(ClearRecords);
-
-        // Инициализация UI
-        LoadRecords();
-        UpdateRecordsUI();
-
-        // Скрываем сообщения о победе и проигрыше
-        HideMessage(_winMessageText);
-        HideMessage(_loseMessageText);
-
-        ShowMenu(); // Показываем меню при запуске
     }
 
-    public void ShowMenu()
+    private void ConfigureCanvasScaler()
     {
-        MenuPanel.SetActive(true);
-        _gameStarted = false;
+        _canvasScaler.referenceResolution = new Vector2(
+            SystemInfo.deviceType == DeviceType.Handheld ? 1080 : 1920,
+            SystemInfo.deviceType == DeviceType.Handheld ? 1920 : 1080
+        );
+        _canvasScaler.matchWidthOrHeight = SystemInfo.deviceType == DeviceType.Handheld ? 0.5f : 0f;
     }
 
-    public void HideMenu()
+    // Реализация методов IUIManager
+    public void Tick(float deltaTime)
     {
-        MenuPanel.SetActive(false);
-        _gameStarted = true;
-        _gameManager.StartNewGame(); // Начинаем новую игру при скрытии меню
+        if (!_isGameActive) return;
+        _elapsedTime += deltaTime;
+        _timerText.text = $"Time: {FormatTime(_elapsedTime)}";
     }
 
-    public void Update(float deltaTime)
-    {
-        if (_isGameActive && _gameStarted)
-        {
-            _elapsedTime += deltaTime;
-            UpdateTimer(_elapsedTime);
-        }
-    }
+    public void ShowMenu() => _menuPanel.SetActive(true);
+    public void HideMenu() => _menuPanel.SetActive(false);
 
     public void UpdateTimer(float time)
     {

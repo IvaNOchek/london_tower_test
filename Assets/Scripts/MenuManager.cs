@@ -38,9 +38,19 @@ public class MenuManager : IMenuManager
         _menuPanel.SetActive(true);
     }
 
+    public MenuManager(IUIManager uiManager, GameObject menuPanel)
+    {
+        _uiManager = uiManager;
+        _menuPanel = menuPanel;
+    }
+
+    public void ShowMenu() => _menuPanel.SetActive(true);
+    public void HideMenu() => _menuPanel.SetActive(false);
+
     public void StartGameWithTowers(int numTowers)
     {
         PlayerPrefs.SetInt("SelectedTowers", numTowers);
+        HideMenu();
         _uiManager.HideMenu();
     }
 

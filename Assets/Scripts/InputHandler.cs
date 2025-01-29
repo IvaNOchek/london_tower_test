@@ -27,36 +27,45 @@ public class InputHandler : IInitializable, ITickable
     {
         if (Input.GetMouseButtonDown(0) && !_gameManager.IsGameOver)
         {
+
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            // Используем NonAlloc версию для оптимизации
+            RaycastHit[] hits = new RaycastHit[5];
+            int count = Physics.RaycastNonAlloc(ray, hits);
+            if (count > 0)
             {
-                Ring clickedRing = hit.collider.GetComponent<Ring>();
-                if (clickedRing != null)
+
+                if (Physics.Raycast(ray, out RaycastHit hit))
                 {
-                    if (clickedRing.IsTransparent)
+
+                    Ring clickedRing = hit.collider.GetComponent<Ring>();
+                    if (clickedRing != null)
                     {
-                        RingPlaceholder targetPlaceholder = clickedRing.GetComponentInParent<RingPlaceholder>();
-                        if (targetPlaceholder != null)
+                        if (clickedRing.IsTransparent)
                         {
-                            _gameManager.MoveRing(targetPlaceholder);
+                            RingPlaceholder targetPlaceholder = clickedRing.GetComponentInParent<RingPlaceholder>();
+                            if (targetPlaceholder != null)
+                            {
+                                _gameManager.MoveRing(targetPlaceholder);
+                            }
+                        }
+                        else
+                        {
+                            if (clickedRing.CurrentTower != null && clickedRing.CurrentTower.Rings.LastOrDefault() == clickedRing)
+                            {
+                                _gameManager.SelectRing(clickedRing);
+                            }
                         }
                     }
                     else
                     {
-                        if (clickedRing.CurrentTower != null && clickedRing.CurrentTower.Rings.LastOrDefault() == clickedRing)
-                        {
-                            _gameManager.SelectRing(clickedRing);
-                        }
+                        _gameManager.SelectRing(null);
                     }
                 }
                 else
                 {
                     _gameManager.SelectRing(null);
                 }
-            }
-            else
-            {
-                _gameManager.SelectRing(null);
             }
         }
     }

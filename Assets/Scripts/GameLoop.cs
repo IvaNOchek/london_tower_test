@@ -15,6 +15,6 @@ public class GameLoop : MonoBehaviour
 
     void Update()
     {
-        _uiManager.Update(Time.deltaTime);
+        _uiManager.Tick(Time.deltaTime);
     }
 }

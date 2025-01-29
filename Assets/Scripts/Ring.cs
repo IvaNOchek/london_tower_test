@@ -1,16 +1,19 @@
 using UnityEngine;
 using DG.Tweening;
-using System.Linq;
+using Zenject;
 
 public class Ring : MonoBehaviour
 {
+    public class Pool : MemoryPool<Ring> { }
+
     public Color RingColor { get; private set; }
-    public bool IsTransparent { get; set; } = false;
+    public bool IsTransparent { get; set; }
+    public float Size => transform.localScale.x;
 
     private Renderer _renderer;
     private Sequence _blinkSequence;
 
-    public Tower CurrentTower { get; private set; }
+    public Tower CurrentTower { get; set; }
 
     public void Initialize(Color color)
     {

@@ -4,51 +4,54 @@ using Zenject;
 public class RingPlaceholder : MonoBehaviour
 {
     public Tower ParentTower { get; private set; }
-    public Ring CurrentRing { get; private set; }
-    public bool IsOccupied => CurrentRing != null;
+    public Ring CurrentRing { get; set; }
 
-    private Material _transparentRingMaterial;
+    private Material _transparentMaterial;
     private Ring _transparentRing;
     private ObjectPool<Ring> _ringPool;
+    public class Pool : MemoryPool<RingPlaceholder> { }
 
-    public void Initialize(Tower parentTower, Material transparentRingMaterial)
+    [Inject]
+    public void Construct(ObjectPool<Ring> ringPool)
     {
-        ParentTower = parentTower;
-        _transparentRingMaterial = transparentRingMaterial;
+        _ringPool = ringPool;
     }
 
-    public void SetRing(Ring ring)
+    public void Initialize(Tower parentTower, Material material)
     {
-        CurrentRing = ring;
+        ParentTower = parentTower;
+        _transparentMaterial = material;
+    }
+
+    public void UpdateVisual(Ring selectedRing)
+    {
+        if (selectedRing == null || CurrentRing != null)
+        {
+            HideTransparentRing();
+            return;
+        }
+
+        if (ParentTower.CanPlaceRingAt(selectedRing, this))
+            ShowTransparentRing();
+        else
+            HideTransparentRing();
     }
 
     public void ShowTransparentRing()
     {
-        if (CurrentRing != null || _transparentRing != null) return;
+        if (_transparentRing != null) return;
 
         _transparentRing = _ringPool.Get();
-        _transparentRing.transform.position = transform.position;
-        _transparentRing.transform.rotation = transform.rotation;
-        _transparentRing.transform.localScale = Vector3.one; // Устанавливаем размер кольца
-        _transparentRing.transform.SetParent(transform);
-        _transparentRing.Initialize(_transparentRingMaterial.color);
+        _transparentRing.Initialize(_transparentMaterial.color);
         _transparentRing.IsTransparent = true;
         _transparentRing.StartBlinking();
     }
 
     public void HideTransparentRing()
     {
-        if (_transparentRing != null)
-        {
-            _transparentRing.StopBlinking();
-            _ringPool.ReturnToPool(_transparentRing);
-            _transparentRing = null;
-        }
-    }
+        if (_transparentRing == null) return;
 
-    [Inject]
-    public void Construct(ObjectPool<Ring> ringPool)
-    {
-        _ringPool = ringPool;
+        _ringPool.ReturnToPool(_transparentRing);
+        _transparentRing = null;
     }
 }
