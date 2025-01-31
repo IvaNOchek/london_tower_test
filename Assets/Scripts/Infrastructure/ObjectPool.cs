@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ”ниверсальный пул объектов дл€ оптимизации (не создаЄм новые объекты, а переиспользуем).
+/// </summary>
 public class ObjectPool<T> : MonoBehaviour where T : Component
 {
     private readonly T _prefab;
@@ -29,7 +32,7 @@ public class ObjectPool<T> : MonoBehaviour where T : Component
             _objects.Enqueue(obj);
         }
 
-        var instance = _objects.Dequeue();
+        T instance = _objects.Dequeue();
         instance.gameObject.SetActive(true);
         return instance;
     }

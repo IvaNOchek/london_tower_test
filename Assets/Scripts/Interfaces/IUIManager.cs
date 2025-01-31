@@ -1,3 +1,6 @@
+/// <summary>
+/// Интерфейс менеджера UI: обновляет таймер, выводит сообщения, показывает/скрывает меню, работает с рекордами.
+/// </summary>
 public interface IUIManager
 {
     void Tick(float deltaTime);

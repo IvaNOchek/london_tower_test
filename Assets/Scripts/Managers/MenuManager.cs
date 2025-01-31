@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Zenject;
 
+/// <summary>
+/// Ћогика главного меню: выбор количества башен, выход из игры, показ рекордов
+/// </summary>
 public class MenuManager : IMenuManager
 {
     private readonly TextMeshProUGUI _recordsText;
@@ -13,6 +15,8 @@ public class MenuManager : IMenuManager
     private readonly IUIManager _uiManager;
 
     private int _defaultNumTowers;
+
+
 
     public MenuManager(
         int defaultNumTowers,
@@ -35,6 +39,7 @@ public class MenuManager : IMenuManager
         _exitButton.onClick.AddListener(ExitGame);
         _recordsButton.onClick.AddListener(DisplayRecords);
 
+        // ѕоказываем меню при старте
         _menuPanel.SetActive(true);
     }
 
@@ -49,7 +54,9 @@ public class MenuManager : IMenuManager
 
     public void StartGameWithTowers(int numTowers)
     {
+        // «апоминаем выбор игрока
         PlayerPrefs.SetInt("SelectedTowers", numTowers);
+
         HideMenu();
         _uiManager.HideMenu();
     }
@@ -61,6 +68,7 @@ public class MenuManager : IMenuManager
 
     public void DisplayRecords()
     {
+        // ѕри нажатии кнопки "Records" Ч загрузить и показать все рекорды
         _uiManager.LoadRecords();
     }
 }

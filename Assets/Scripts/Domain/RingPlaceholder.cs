@@ -1,6 +1,9 @@
 using UnityEngine;
 using Zenject;
 
+/// <summary>
+/// Плейсхолдер для кольца. При наведении показывает прозрачное кольцо, если ход допустим.
+/// </summary>
 public class RingPlaceholder : MonoBehaviour
 {
     public Tower ParentTower { get; private set; }
@@ -9,6 +12,7 @@ public class RingPlaceholder : MonoBehaviour
     private Material _transparentMaterial;
     private Ring _transparentRing;
     private ObjectPool<Ring> _ringPool;
+
     public class Pool : MemoryPool<RingPlaceholder> { }
 
     [Inject]

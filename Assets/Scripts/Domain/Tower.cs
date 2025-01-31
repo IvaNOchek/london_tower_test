@@ -26,11 +26,12 @@ public class Tower : MonoBehaviour
 
     private void CreatePlaceholders()
     {
-        float heightStep = 1f;
+        float step = 1f;
         for (int i = 0; i < Capacity; i++)
         {
             var placeholder = _placeholderPool.Get();
-            placeholder.transform.position = transform.position + Vector3.up * i * heightStep;
+            placeholder.transform.position = transform.position + Vector3.up * (i * step);
+            placeholder.transform.SetParent(transform);
             placeholder.Initialize(this, _transparentMaterial);
             RingPlaceholders.Add(placeholder);
         }
@@ -38,21 +39,30 @@ public class Tower : MonoBehaviour
 
     public void DestroyPlaceholders()
     {
-        foreach (var placeholder in RingPlaceholders)
-            _placeholderPool.ReturnToPool(placeholder);
+        foreach (var ph in RingPlaceholders)
+        {
+            ph.HideTransparentRing();
+            _placeholderPool.ReturnToPool(ph);
+        }
         RingPlaceholders.Clear();
     }
 
     public bool CanPlaceRingAt(Ring ring, RingPlaceholder placeholder)
     {
-        return placeholder.ParentTower == this &&
-               (Rings.Count == 0 || Rings[^1].Size > ring.Size);
+        if (placeholder.ParentTower != this) return false;
+        if (Rings.Count == 0) return true;
+        return Rings[^1].Size > ring.Size;
     }
 
     public void PlaceRing(Ring ring)
     {
         Rings.Add(ring);
         ring.CurrentTower = this;
+
+        // Разместим кольцо в позиции соответствующего плейсхолдера
+        RingPlaceholder ph = RingPlaceholders[Rings.Count - 1];
+        ring.transform.SetParent(ph.transform);
+        ring.transform.SetPositionAndRotation(ph.transform.position, ph.transform.rotation);
     }
 
     public void RemoveRing(Ring ring)

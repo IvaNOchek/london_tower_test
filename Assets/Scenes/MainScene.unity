@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 104455187}
   - component: {fileID: 104455186}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: reset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1006113288}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 253372256}
   - component: {fileID: 253372255}
   m_Layer: 5
-  m_Name: Text (TMP) (6)
+  m_Name: goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -545,7 +545,7 @@ GameObject:
   - component: {fileID: 285661528}
   - component: {fileID: 285661530}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -652,7 +652,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1006113288}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SaveGame
         m_Mode: 1
@@ -733,7 +733,7 @@ GameObject:
   - component: {fileID: 357789591}
   - component: {fileID: 357789590}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: record_time
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -975,7 +975,7 @@ GameObject:
   - component: {fileID: 480669966}
   - component: {fileID: 480669965}
   m_Layer: 5
-  m_Name: Button
+  m_Name: clear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1044,7 +1044,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1006113288}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: SaveGame
         m_Mode: 1
@@ -1268,7 +1268,7 @@ GameObject:
   - component: {fileID: 888585930}
   - component: {fileID: 888585929}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: record_moves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1494,7 +1494,7 @@ GameObject:
   - component: {fileID: 997335264}
   - component: {fileID: 997335263}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: moves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1625,9 +1625,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1006113286}
-  - component: {fileID: 1006113287}
-  - component: {fileID: 1006113288}
-  - component: {fileID: 1006113289}
+  - component: {fileID: 1006113291}
   - component: {fileID: 1006113290}
   m_Layer: 0
   m_Name: Manager
@@ -1651,64 +1649,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1006113287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1006113283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a28b18087460af241b51f57ea777530c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NumTowers: 3
-  TowerPrefab: {fileID: 1233236884}
-  RingPrefab: {fileID: 7866447673332478270}
-  TowerSpacing: 1
-  MaxMoves: 5
-  TransparentRingMaterial: {fileID: 2100000, guid: a0872248663d5db4c8f63c968da3bafb, type: 2}
-  PlaceholderSpacing: 0.55
-  clickSound: {fileID: 8300000, guid: fc6bb008a2f088a4ea6ebf1afa1195b6, type: 3}
-  moveSound: {fileID: 8300000, guid: f9a7368f53a4e7541a867be460b32943, type: 3}
-  winSound: {fileID: 8300000, guid: 93d60ae571c40874da024c4e68111a1f, type: 3}
-  loseSound: {fileID: 8300000, guid: 012822dd2330f4744afea99f644c99b8, type: 3}
-  ColorOrderUIPrefab: {fileID: 265865157}
-  ColorOrderUIParent: {fileID: 450566550}
---- !u!114 &1006113288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1006113283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78b3cfba8b510be4885b2b46bedb7d63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RestartButton: {fileID: 104455186}
-  ExitButton: {fileID: 1023409459}
-  ClearRecordsButton: {fileID: 285661530}
-  RemainingMovesText: {fileID: 997335263}
-  TimerText: {fileID: 1629716061}
-  BestMovesRecordText: {fileID: 888585929}
-  BestTimeRecordText: {fileID: 357789590}
-  WinMessageText: {fileID: 1816420863}
-  LoseMessageText: {fileID: 1816420863}
---- !u!114 &1006113289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1006113283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4dec2ef2a0921749aba275e39383545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &1006113290
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1805,6 +1745,44 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1006113291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006113283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b836f4376aaa9f0488b4509375203570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TowerPrefab: {fileID: 1233236884}
+  RingPrefab: {fileID: 7866447673332478271}
+  RingPlaceholderPrefab: {fileID: 3343016281715393769}
+  ColorOrderUIPrefab: {fileID: 265865157}
+  TransparentRingMaterial: {fileID: 2100000, guid: 209ea2f17ebe64e85a177a9bbad10476, type: 2}
+  ColorOrderUIParent: {fileID: 450566550}
+  RestartButton: {fileID: 104455186}
+  ClickSound: {fileID: 8300000, guid: fc6bb008a2f088a4ea6ebf1afa1195b6, type: 3}
+  MoveSound: {fileID: 8300000, guid: f9a7368f53a4e7541a867be460b32943, type: 3}
+  WinSound: {fileID: 8300000, guid: 93d60ae571c40874da024c4e68111a1f, type: 3}
+  LoseSound: {fileID: 8300000, guid: 012822dd2330f4744afea99f644c99b8, type: 3}
+  ExitButton: {fileID: 1023409459}
+  ClearRecordsButton: {fileID: 480669965}
+  RemainingMovesText: {fileID: 997335263}
+  TimerText: {fileID: 1629716061}
+  BestMovesRecordText: {fileID: 888585929}
+  BestTimeRecordText: {fileID: 357789590}
+  WinMessageText: {fileID: 1816420863}
+  LoseMessageText: {fileID: 1816420863}
+  AudioSource: {fileID: 1006113290}
+  MenuPanel: {fileID: 253372253}
+  StartButton: {fileID: 104455186}
+  ExitMenuButton: {fileID: 1023409459}
+  RecordsButton: {fileID: 285661530}
+  RecordsText: {fileID: 888585929}
+  DefaultNumTowers: 3
 --- !u!1 &1023409457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1818,7 +1796,7 @@ GameObject:
   - component: {fileID: 1023409460}
   - component: {fileID: 1023409459}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1887,7 +1865,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1006113288}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ExitGame
         m_Mode: 1
@@ -1949,6 +1927,7 @@ GameObject:
   - component: {fileID: 1209326200}
   - component: {fileID: 1209326199}
   - component: {fileID: 1209326198}
+  - component: {fileID: 1209326202}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2051,6 +2030,30 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1209326202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209326197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b3cfba8b510be4885b2b46bedb7d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RecordsText: {fileID: 253372255}
+  _canvasScaler: {fileID: 1209326199}
+  _restartButton: {fileID: 104455186}
+  _exitButton: {fileID: 1023409459}
+  _clearRecordsButton: {fileID: 480669965}
+  _remainingMovesText: {fileID: 997335263}
+  _timerText: {fileID: 1629716061}
+  _bestMovesRecordText: {fileID: 888585929}
+  _bestTimeRecordText: {fileID: 357789590}
+  _winMessageText: {fileID: 1816420863}
+  _loseMessageText: {fileID: 1816420863}
+  _menuPanel: {fileID: 253372253}
 --- !u!1 &1233236884 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1318095381345636572, guid: 08f5179b9ecd0914e8b5e06bb6492cab, type: 3}
@@ -2067,8 +2070,9 @@ GameObject:
   - component: {fileID: 1629716060}
   - component: {fileID: 1629716062}
   - component: {fileID: 1629716061}
+  - component: {fileID: 1629716063}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: time
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2190,6 +2194,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1629716059}
   m_CullTransparentMesh: 1
+--- !u!114 &1629716063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629716059}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eabcaad3f9567c47a4642cf58408b4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1713665352
 GameObject:
   m_ObjectHideFlags: 0
@@ -2721,6 +2737,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b5cecf7ffa492d4fa4d0f97eb788955, type: 3}
+--- !u!114 &3343016281715393769 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1579873439472850451, guid: 0b5cecf7ffa492d4fa4d0f97eb788955, type: 3}
+  m_PrefabInstance: {fileID: 3343016281715393768}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e879df7383ad0f44f923d1d8fc15a530, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7866447673332478269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2778,11 +2805,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bee60d3b66c4c74d836db067723c4fc, type: 3}
---- !u!1 &7866447673332478270 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2776182351891534744, guid: 0bee60d3b66c4c74d836db067723c4fc, type: 3}
+--- !u!114 &7866447673332478271 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1559730186139293292, guid: 0bee60d3b66c4c74d836db067723c4fc, type: 3}
   m_PrefabInstance: {fileID: 7866447673332478269}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e85c46f4c22355a4598e837b4788a747, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

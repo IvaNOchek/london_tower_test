@@ -3,6 +3,10 @@ using Zenject;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Установка зависимостей (Installer) через Zenject. 
+/// Содержит все необходимые поля, помеченные как [Header] и т.д.
+/// </summary>
 public class GameInstaller : MonoInstaller
 {
     [Header("Prefabs")]
@@ -39,7 +43,9 @@ public class GameInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        // Пулы объектов
+ 
+        // 1. Пулы объектов (MemoryPool)
+
         Container.BindMemoryPool<Ring, Ring.Pool>()
             .WithInitialSize(10)
             .FromComponentInNewPrefab(RingPrefab.gameObject)
@@ -50,16 +56,40 @@ public class GameInstaller : MonoInstaller
             .FromComponentInNewPrefab(RingPlaceholderPrefab.gameObject)
             .UnderTransformGroup("PlaceholdersPool");
 
-        // Основные привязки
+ 
+        // 2. Основные менеджеры/сервисы
+
         Container.BindInterfacesAndSelfTo<GameTimer>().AsSingle().NonLazy();
+        // GameManager (логика игры)
+
         Container.Bind<IGameManager>().To<GameManager>().AsSingle();
+
+        // UIManager (сам компонент находится уже в сцене, ищем его и связываем как IUIManager)
         Container.Bind<IUIManager>().To<UIManager>().FromComponentInHierarchy().AsSingle();
+
+        // SaveManager для записи в JSON
         Container.Bind<ISaveManager>().To<SaveManager>().AsSingle();
+
+        // InputHandler (обработка кликов мыши/касаний)
         Container.Bind<InputHandler>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle().NonLazy();
+
+        Container.Bind<CoroutineRunner>()
+    .FromNewComponentOnNewGameObject()
+    .WithGameObjectName("CoroutineRunner")
+    .AsSingle()
+    .NonLazy();
+
+        // Прозрачный материал (используем ID, если хотим потом инъектить именно как "TransparentMaterial")
         Container.Bind<Material>().WithId("TransparentMaterial").FromInstance(TransparentRingMaterial);
+
+        // Необязательный пул (если вы используете свой ObjectPool<>) 
+        // Если это не нужно, можно убрать
         Container.Bind<ObjectPool<RingPlaceholder>>().AsSingle();
 
-        // Привязка параметров GameManager
+ 
+        // 3. Привязка параметров для GameManager
+ 
         Container.BindInstance(TowerPrefab).WhenInjectedInto<GameManager>();
         Container.BindInstance(ColorOrderUIPrefab).WhenInjectedInto<GameManager>();
         Container.BindInstance(ColorOrderUIParent).WhenInjectedInto<GameManager>();
@@ -70,7 +100,9 @@ public class GameInstaller : MonoInstaller
         Container.BindInstance(LoseSound).WhenInjectedInto<GameManager>();
         Container.BindInstance(AudioSource).WhenInjectedInto<GameManager>();
 
-        // Привязка UI элементов
+ 
+        // 4. Привязка UI-элементов к UIManager
+ 
         Container.BindInstance(RestartButton).WhenInjectedInto<UIManager>();
         Container.BindInstance(ExitButton).WhenInjectedInto<UIManager>();
         Container.BindInstance(ClearRecordsButton).WhenInjectedInto<UIManager>();
@@ -80,14 +112,11 @@ public class GameInstaller : MonoInstaller
         Container.BindInstance(BestTimeRecordText).WhenInjectedInto<UIManager>();
         Container.BindInstance(WinMessageText).WhenInjectedInto<UIManager>();
         Container.BindInstance(LoseMessageText).WhenInjectedInto<UIManager>();
-        // Привязка меню
+        Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle().NonLazy();
+ 
+        // 5. Привязка менеджера меню, если используется
+ 
         Container.Bind<IMenuManager>().To<MenuManager>().AsSingle()
             .WithArguments(DefaultNumTowers, RecordsText, MenuPanel, StartButton, ExitMenuButton, RecordsButton);
     }
-}
-
-public class GameRecord
-{
-    public int BestMoves;
-    public float BestTime;
 }

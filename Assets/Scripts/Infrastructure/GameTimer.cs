@@ -1,6 +1,9 @@
 using UnityEngine;
 using Zenject;
 
+/// <summary>
+/// Âûחûגאוע Tick ף UIManager ךאזהûי ךאהנ.
+/// </summary>
 public class GameTimer : MonoBehaviour
 {
     private IUIManager _uiManager;
@@ -11,7 +14,7 @@ public class GameTimer : MonoBehaviour
         _uiManager = uiManager;
     }
 
-    void Update()
+    private void Update()
     {
         _uiManager.Tick(Time.deltaTime);
     }

@@ -1,5 +1,9 @@
 using System;
 
+/// <summary>
+/// Интерфейс основного игрового менеджера.
+/// Управляет ходами, выбором кольца, перемещением, проверкой победы/проигрыша.
+/// </summary>
 public interface IGameManager
 {
     int Moves { get; }

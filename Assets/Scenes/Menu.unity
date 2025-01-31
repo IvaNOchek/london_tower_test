@@ -543,14 +543,14 @@ PrefabInstance:
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 782150882}
+      objectReference: {fileID: 782150883}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartGameWithTowers
+      value: OnClick_SetTowersAndLoadGame
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MenuManager, Assembly-CSharp
+      value: MenuButtonSetTowers, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -648,27 +648,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: level (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4649783337237959352, guid: a353962cc678f9148be35050527b9299, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6627698357905126889, guid: a353962cc678f9148be35050527b9299, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 782150883}
   m_SourcePrefab: {fileID: 100100000, guid: a353962cc678f9148be35050527b9299, type: 3}
 --- !u!224 &782150881 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 650800490479724666, guid: a353962cc678f9148be35050527b9299, type: 3}
   m_PrefabInstance: {fileID: 782150880}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &782150882 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4649783337237959352, guid: a353962cc678f9148be35050527b9299, type: 3}
+--- !u!1 &782150882 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6627698357905126889, guid: a353962cc678f9148be35050527b9299, type: 3}
   m_PrefabInstance: {fileID: 782150880}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &782150883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782150882}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c748cb39ae159e4897bfe180629833c, type: 3}
+  m_Script: {fileID: 11500000, guid: 13f11be3dd5e69d4785736c62f51cc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towersCount: 4
 --- !u!1001 &841465543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -680,14 +691,14 @@ PrefabInstance:
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 841465545}
+      objectReference: {fileID: 841465546}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartGameWithTowers
+      value: OnClick_SetTowersAndLoadGame
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MenuManager, Assembly-CSharp
+      value: MenuButtonSetTowers, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -785,27 +796,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: level (4)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4649783337237959352, guid: a353962cc678f9148be35050527b9299, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6627698357905126889, guid: a353962cc678f9148be35050527b9299, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 841465546}
   m_SourcePrefab: {fileID: 100100000, guid: a353962cc678f9148be35050527b9299, type: 3}
 --- !u!224 &841465544 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 650800490479724666, guid: a353962cc678f9148be35050527b9299, type: 3}
   m_PrefabInstance: {fileID: 841465543}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &841465545 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4649783337237959352, guid: a353962cc678f9148be35050527b9299, type: 3}
+--- !u!1 &841465545 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6627698357905126889, guid: a353962cc678f9148be35050527b9299, type: 3}
   m_PrefabInstance: {fileID: 841465543}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &841465546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841465545}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c748cb39ae159e4897bfe180629833c, type: 3}
+  m_Script: {fileID: 11500000, guid: 13f11be3dd5e69d4785736c62f51cc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towersCount: 7
 --- !u!1001 &888423320
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -817,14 +839,14 @@ PrefabInstance:
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 888423322}
+      objectReference: {fileID: 888423323}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartGameWithTowers
+      value: OnClick_SetTowersAndLoadGame
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MenuManager, Assembly-CSharp
+      value: MenuButtonSetTowers, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -922,27 +944,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: level (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4649783337237959352, guid: a353962cc678f9148be35050527b9299, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6627698357905126889, guid: a353962cc678f9148be35050527b9299, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 888423323}
   m_SourcePrefab: {fileID: 100100000, guid: a353962cc678f9148be35050527b9299, type: 3}
 --- !u!224 &888423321 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 650800490479724666, guid: a353962cc678f9148be35050527b9299, type: 3}
   m_PrefabInstance: {fileID: 888423320}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &888423322 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4649783337237959352, guid: a353962cc678f9148be35050527b9299, type: 3}
+--- !u!1 &888423322 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6627698357905126889, guid: a353962cc678f9148be35050527b9299, type: 3}
   m_PrefabInstance: {fileID: 888423320}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &888423323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888423322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c748cb39ae159e4897bfe180629833c, type: 3}
+  m_Script: {fileID: 11500000, guid: 13f11be3dd5e69d4785736c62f51cc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towersCount: 5
 --- !u!1001 &901202336
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -954,14 +987,14 @@ PrefabInstance:
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1487333973}
+      objectReference: {fileID: 1487333975}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ExitGame
+      value: LoadGameScene
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MenuManager, Assembly-CSharp
+      value: SceneLoader, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1183,14 +1216,14 @@ PrefabInstance:
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1174139249}
+      objectReference: {fileID: 1174139250}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartGameWithTowers
+      value: OnClick_SetTowersAndLoadGame
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MenuManager, Assembly-CSharp
+      value: MenuButtonSetTowers, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1288,27 +1321,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: level (5)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4649783337237959352, guid: a353962cc678f9148be35050527b9299, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6627698357905126889, guid: a353962cc678f9148be35050527b9299, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1174139250}
   m_SourcePrefab: {fileID: 100100000, guid: a353962cc678f9148be35050527b9299, type: 3}
 --- !u!224 &1174139248 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 650800490479724666, guid: a353962cc678f9148be35050527b9299, type: 3}
   m_PrefabInstance: {fileID: 1174139247}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1174139249 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4649783337237959352, guid: a353962cc678f9148be35050527b9299, type: 3}
+--- !u!1 &1174139249 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6627698357905126889, guid: a353962cc678f9148be35050527b9299, type: 3}
   m_PrefabInstance: {fileID: 1174139247}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &1174139250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174139249}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c748cb39ae159e4897bfe180629833c, type: 3}
+  m_Script: {fileID: 11500000, guid: 13f11be3dd5e69d4785736c62f51cc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towersCount: 8
 --- !u!1 &1222329755
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,14 +1439,14 @@ PrefabInstance:
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1358105898}
+      objectReference: {fileID: 1358105899}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartGameWithTowers
+      value: OnClick_SetTowersAndLoadGame
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MenuManager, Assembly-CSharp
+      value: MenuButtonSetTowers, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1500,27 +1544,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: level (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4649783337237959352, guid: a353962cc678f9148be35050527b9299, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6627698357905126889, guid: a353962cc678f9148be35050527b9299, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1358105899}
   m_SourcePrefab: {fileID: 100100000, guid: a353962cc678f9148be35050527b9299, type: 3}
 --- !u!224 &1358105897 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 650800490479724666, guid: a353962cc678f9148be35050527b9299, type: 3}
   m_PrefabInstance: {fileID: 1358105896}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1358105898 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4649783337237959352, guid: a353962cc678f9148be35050527b9299, type: 3}
+--- !u!1 &1358105898 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6627698357905126889, guid: a353962cc678f9148be35050527b9299, type: 3}
   m_PrefabInstance: {fileID: 1358105896}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &1358105899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358105898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c748cb39ae159e4897bfe180629833c, type: 3}
+  m_Script: {fileID: 11500000, guid: 13f11be3dd5e69d4785736c62f51cc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towersCount: 6
 --- !u!1 &1470405882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1605,7 +1660,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1487333974}
-  - component: {fileID: 1487333973}
+  - component: {fileID: 1487333975}
+  - component: {fileID: 1487333976}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1613,20 +1669,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1487333973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487333972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c748cb39ae159e4897bfe180629833c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NumTowers: 3
-  RecordsText: {fileID: 2388114}
 --- !u!4 &1487333974
 Transform:
   m_ObjectHideFlags: 0
@@ -1642,6 +1684,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1487333975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487333972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad42e6b23db71d4085faf51a98c5c14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1487333976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487333972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b3cfba8b510be4885b2b46bedb7d63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RecordsText: {fileID: 2388114}
+  _canvasScaler: {fileID: 0}
+  _restartButton: {fileID: 0}
+  _exitButton: {fileID: 0}
+  _clearRecordsButton: {fileID: 0}
+  _remainingMovesText: {fileID: 0}
+  _timerText: {fileID: 0}
+  _bestMovesRecordText: {fileID: 0}
+  _bestTimeRecordText: {fileID: 0}
+  _winMessageText: {fileID: 0}
+  _loseMessageText: {fileID: 0}
+  _menuPanel: {fileID: 2388112}
 --- !u!1001 &3779671160518649046
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1650,6 +1728,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 566317548}
     m_Modifications:
+    - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3779671160518649048}
+    - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClick_SetTowersAndLoadGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuButtonSetTowers, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 650800490479724666, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1734,11 +1824,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: level
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4649783337237959352, guid: a353962cc678f9148be35050527b9299, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6627698357905126889, guid: a353962cc678f9148be35050527b9299, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3779671160518649048}
   m_SourcePrefab: {fileID: 100100000, guid: a353962cc678f9148be35050527b9299, type: 3}
+--- !u!1 &3779671160518649047 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6627698357905126889, guid: a353962cc678f9148be35050527b9299, type: 3}
+  m_PrefabInstance: {fileID: 3779671160518649046}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3779671160518649048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3779671160518649047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13f11be3dd5e69d4785736c62f51cc8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towersCount: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
