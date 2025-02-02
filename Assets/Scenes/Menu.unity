@@ -680,6 +680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towersCount: 4
+  sceneToLoad: MainScene
 --- !u!1001 &841465543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -828,6 +829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towersCount: 7
+  sceneToLoad: MainScene
 --- !u!1001 &888423320
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -976,6 +978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towersCount: 5
+  sceneToLoad: MainScene
 --- !u!1001 &901202336
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -987,14 +990,14 @@ PrefabInstance:
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1487333975}
+      objectReference: {fileID: 1487333976}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadGameScene
+      value: ExitGame
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SceneLoader, Assembly-CSharp
+      value: UIManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 499486998570455642, guid: a353962cc678f9148be35050527b9299, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1353,6 +1356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towersCount: 8
+  sceneToLoad: MainScene
 --- !u!1 &1222329755
 GameObject:
   m_ObjectHideFlags: 0
@@ -1576,6 +1580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towersCount: 6
+  sceneToLoad: MainScene
 --- !u!1 &1470405882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1851,6 +1856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towersCount: 3
+  sceneToLoad: MainScene
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -39,9 +39,9 @@ public class UIManager : MonoBehaviour, IUIManager
     {
         ConfigureCanvasScaler();
 
-        _gameManager.OnMovesUpdated += UpdateRemainingMoves;
+/*        _gameManager.OnMovesUpdated += UpdateRemainingMoves;
         _gameManager.OnGameWon += ShowWinMessage;
-        _gameManager.OnGameLost += ShowLoseMessage;
+        _gameManager.OnGameLost += ShowLoseMessage;*/
 
         if (_restartButton) _restartButton.onClick.AddListener(RestartGame);
         if (_exitButton) _exitButton.onClick.AddListener(ExitToMenu);
@@ -125,32 +125,11 @@ public class UIManager : MonoBehaviour, IUIManager
 
     public void LoadRecords()
     {
-        var data = _saveManager.LoadAllRecords();
-        if (data == null || data.AllRecords.Count == 0)
+        var currentRecord = _saveManager.LoadBestRecordFor(_currentTowersCount);
+        if (currentRecord != null)
         {
-            RecordsText.text = "No Records Yet";
-            _bestMovesRecordText.text = "Best Moves: -";
-            _bestTimeRecordText.text = "Best Time: -";
-            return;
-        }
-
-        // Выводим список всех
-        string all = string.Join("\n", data.AllRecords
-            .OrderBy(r => r.TowerCount)
-            .Select(r => $"Towers={r.TowerCount}  Moves={r.BestMoves}  Time={FormatTime(r.BestTime)}"));
-        RecordsText.text = all;
-
-        // Рекорд для текущего уровня
-        var rec = data.AllRecords.Find(r => r.TowerCount == _currentTowersCount);
-        if (rec != null)
-        {
-            _bestMovesRecordText.text = $"Best Moves: {rec.BestMoves}";
-            _bestTimeRecordText.text = $"Best Time: {FormatTime(rec.BestTime)}";
-        }
-        else
-        {
-            _bestMovesRecordText.text = "Best Moves: -";
-            _bestTimeRecordText.text = "Best Time: -";
+            _bestMovesRecordText.text = $"Рекорд ходов: {currentRecord.BestMoves}";
+            _bestTimeRecordText.text = $"Рекорд времени: {FormatTime(currentRecord.BestTime)}";
         }
     }
 

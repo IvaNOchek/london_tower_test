@@ -17,24 +17,25 @@ public class SaveManager : ISaveManager
     {
         if (!isWin) return;
 
-        RecordsData data = LoadAllRecords() ?? new RecordsData();
+        RecordsData data = LoadAllRecords();
+        GameRecord existing = data.AllRecords.Find(r => r.TowerCount == towerCount);
 
-        // Ищем подходящую запись
-        GameRecord rec = data.AllRecords.Find(r => r.TowerCount == towerCount);
-        if (rec == null)
+        if (existing == null)
         {
-            rec = new GameRecord { TowerCount = towerCount, BestMoves = moves, BestTime = time };
-            data.AllRecords.Add(rec);
+            data.AllRecords.Add(new GameRecord
+            {
+                TowerCount = towerCount,
+                BestMoves = moves,
+                BestTime = time
+            });
         }
         else
         {
-            // Обновим, если новые результаты лучше
-            if (moves < rec.BestMoves) rec.BestMoves = moves;
-            if (time < rec.BestTime) rec.BestTime = time;
+            if (moves < existing.BestMoves) existing.BestMoves = moves;
+            if (time < existing.BestTime) existing.BestTime = time;
         }
 
-        string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(_jsonPath, json);
+        File.WriteAllText(_jsonPath, JsonUtility.ToJson(data, true));
     }
 
     public GameRecord LoadBestRecordFor(int towerCount)

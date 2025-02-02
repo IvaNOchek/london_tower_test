@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 /// <summary>
 /// Логика главного меню: выбор количества башен, выход из игры, показ рекордов
 /// </summary>
-public class MenuManager : IMenuManager
+/// 
+public class MenuManager : MonoBehaviour, IMenuManager
 {
     private readonly TextMeshProUGUI _recordsText;
     private readonly GameObject _menuPanel;
@@ -13,6 +15,7 @@ public class MenuManager : IMenuManager
     private readonly Button _exitButton;
     private readonly Button _recordsButton;
     private readonly IUIManager _uiManager;
+    private ISaveManager _saveManager;
 
     private int _defaultNumTowers;
 
@@ -43,10 +46,11 @@ public class MenuManager : IMenuManager
         _menuPanel.SetActive(true);
     }
 
-    public MenuManager(IUIManager uiManager, GameObject menuPanel)
+    public MenuManager(TextMeshProUGUI recordsText, ISaveManager saveManager)
     {
-        _uiManager = uiManager;
-        _menuPanel = menuPanel;
+        _recordsText = recordsText;
+        _saveManager = saveManager;
+        LoadAllRecords();
     }
 
     public void ShowMenu() => _menuPanel.SetActive(true);
@@ -68,7 +72,36 @@ public class MenuManager : IMenuManager
 
     public void DisplayRecords()
     {
-        // При нажатии кнопки "Records" — загрузить и показать все рекорды
-        _uiManager.LoadRecords();
+        var records = _saveManager.LoadAllRecords().AllRecords;
+        string recordsText = "Рекорды:\n";
+        foreach (var record in records.OrderBy(r => r.TowerCount))
+        {
+            recordsText += $"Башен: {record.TowerCount}\nХоды: {record.BestMoves} Время: {FormatTime(record.BestTime)}\n";
+        }
+        _recordsText.text = recordsText;
+    }
+
+    public void LoadAllRecords()
+    {
+        var records = _saveManager.LoadAllRecords();
+        if (records == null || records.AllRecords.Count == 0)
+        {
+            _recordsText.text = "No records yet!";
+            return;
+        }
+
+        string recordsStr = "";
+        foreach (var rec in records.AllRecords)
+        {
+            recordsStr += $"Towers: {rec.TowerCount} | Moves: {rec.BestMoves} | Time: {FormatTime(rec.BestTime)}\n";
+        }
+        _recordsText.text = recordsStr;
+    }
+
+    private string FormatTime(float time)
+    {
+        int minutes = (int)(time / 60);
+        int seconds = (int)(time % 60);
+        return $"{minutes:D2}:{seconds:D2}";
     }
 }

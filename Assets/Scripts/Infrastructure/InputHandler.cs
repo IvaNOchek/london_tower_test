@@ -122,7 +122,7 @@ public class InputHandler : Zenject.IInitializable, ITickable
 
     private void HandleTransparentRingClick(Ring ring)
     {
-        RingPlaceholder placeholder = ring.GetComponentInParent<RingPlaceholder>();
+        var placeholder = ring.GetComponentInParent<RingPlaceholder>();
         if (placeholder != null)
         {
             _gameManager.MoveRing(placeholder);
